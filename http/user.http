@@ -1,0 +1,140 @@
+@superAdminAuth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTE0MjNkZDgxMDVmOTFkNDNiNTU3OCIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY0OTQ5MjU0MSwiZXhwIjoxNjQ5NTE0MTQxfQ.889YwhfbvTJ34apnqk9fG3cS25bFUte5_x0NrfjD7q4
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODhjZTE3MTI2NmRiMzI4YmFkNjVhYSIsInJvbGUiOiJsYXd5ZXIiLCJpYXQiOjE2NzA4NTY0OTYsImV4cCI6MTY3MTExNTY5Nn0.kHRFhPiGxN7Q8fI53M_QTbMuaPLq6Gh3WvzteOEaEuw
+@token2 =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTk5OTNjYzc1MmQzY2QxMjViOTQyYSIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY1MDAzOTEwMCwiZXhwIjoxNjUwMDYwNzAwfQ.n45mcBfTXqoXgUpbso7s6gnBDk3EjxgjqwKsxByJoCI
+
+@guest2AuthToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3MgVGxpbGkiLCJlbWFpbCI6ImJvZHNzc25nby50bGlsaUBnbWFpbC5jbSIsInBhc3N3b3JkIjoiJDJiJDEwJDMveTV3Rk9QS1YxL3JpdHM4RVI0ZmVwakg1MDlEY2JmUHF5MVV1VkpQLm1EbUhEWExFRS95Iiwicm9sZSI6Imd1ZXN0IiwiX2lkIjoiNjFlMGI3MWI1ZjJmZTIwZTdiY2UxNTY4IiwiaWF0IjoxNjQyMTE2ODkxLCJleHAiOjE2NDI3MjE2OTF9.eKJKJhGmTgwU0_BuGQPd-N3qhRtlnrbfEe34I7CbIuQ
+@dhia=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWM0YTlkYmI4YjU0MmRhZWZkOWI5MiIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY1MDIxNTU4MSwiZXhwIjoxNjUwMjM3MTgxfQ.XwAnKAgd2r51baMAL43q8MUH4Rs1OGg0mB3eUp8-Rg4
+@idris=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzgyNzk4ZDUyYjE4YTgyODY5YjkyNyIsInJvbGUiOiJsYXd5ZXIiLCJpYXQiOjE2NTIwNDE2NTUsImV4cCI6MTY1MjA2MzI1NX0.Bqwcw5ahDwAwzTHB1rhGPTCPd5f7rasufEwhB7uEYWQ
+@med=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWM0YTZmYmI4YjU0MmRhZWZkOWI4OSIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY1MDIxNTUzNSwiZXhwIjoxNjUwMjM3MTM1fQ.nYE7mhWFmCa-M7ByhVs5pi1eaj74e2_lO-CcMbtaSko
+@aymen=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkOTU3Yzc4NmYwN2FkMDYwNzIxNSIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY1MjU0NTg3OSwiZXhwIjoxNjUyNTY3NDc5fQ.2QPpoHu7PZtmmItPjGVdW_8JXzgStuqTNxocB9e-QC0
+@anis=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWM0YTEwYmI4YjU0MmRhZWZkOWI3NCIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY1MDIxNTQ0MCwiZXhwIjoxNjUwMjM3MDQwfQ.6xqsZJVqzF08eJM2oShWjR5ZwWuBVb2mdrzeR57z0Ys
+@firebasetoken = AAAANXnathI:APA91bFN_y7fnqDW63HynCqwUVQB8FG1klme3QgmxxM0sMuQBi951FGyAqCaGTIn0K2E-aI2jxrLzKdKAJj6UTYkAo5310srE_9u3vL-t7Latvs-TPRLWdVIUNTdFhxI8MfaLct059X2
+
+
+### Register
+POST {{$dotenv CLIENT_SERVER_URL}}/user/register HTTP/1.1
+content-type: application/json 
+
+{
+    "firstName":"Achraf",
+    "lastName":"Ouali",
+    "email":"lenit58199@qupas.com",
+    "password":"123456789",
+    "phone":"4641221"
+}
+
+### Login
+POST {{$dotenv CLIENT_SERVER_URL}}/user/login HTTP/1.1
+content-type: application/json 
+
+{
+    "email":"lenit58199@qupas.com",
+    "password":"123456789"
+}
+### admin login
+POST {{$dotenv CLIENT_SERVER_URL}}/user/admin-login HTTP/1.1
+content-type: application/json 
+
+{
+    "password":"admin"
+}
+### Refresh
+GET {{$dotenv CLIENT_SERVER_URL}}/user/refresh HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json 
+
+### Become Lawyer
+POST {{$dotenv CLIENT_SERVER_URL}}/user/become-lawyer HTTP/1.1
+Authorization: bearer {{superAdminAuth}}
+content-type: application/json 
+
+{
+    "addressInArabic": "adress",
+    "addressInEnglish": "adress",
+    "phoneNumber": "0123456789"
+}
+
+### Reset Password
+POST {{$dotenv CLIENT_SERVER_URL}}/user/reset-password HTTP/1.1
+content-type: application/json 
+
+{
+    "email":"tliliidris00@gmail.com",
+    "password":"123456789",
+    "passwordResetCode":890162
+}
+
+### Forgot Password
+POST {{$dotenv CLIENT_SERVER_URL}}/user/forgot-password HTTP/1.1
+content-type: application/json 
+
+{
+    "email":"tliliidris00@gmail.com"
+}
+
+### Change Password
+POST {{$dotenv CLIENT_SERVER_URL}}/user/change-password HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json 
+
+{   
+    "email":"leox147@yahoo.com",
+    "oldPassword":"12345678",
+    "newPassword":"11001100"
+}
+
+### Change password auth 
+POST {{$dotenv AUTH_SERVER_URL}}/user/change-password HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json 
+
+{
+    "id": "62d447e3661331bc2caa9cf8",
+    "email":"leox147@yahoo.com",
+    "oldPassword":"12345678",
+    "newPassword":"11001100"
+}
+
+### Change User Email 
+POST {{$dotenv CLIENT_SERVER_URL}}/user/change-email HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json 
+
+{
+    "_id": "62f67751e1c7da612f8fdf5f",
+    "email": "alaben@gmail.com"
+}
+
+### Send Notification
+POST https://fcm.googleapis.com/fcm/send HTTP/1.1
+Authorization: bearer {{firebasetoken}}
+content-type: application/json 
+
+{
+	"to":"eUEKpFY2Th-QOaalQn8RKK:APA91bEWATAABnUq9_UBkazcAfOE_ZpxjjBkcnN9hBddeGw068CZd0tFmyN5m6fkAbZpi6rXU6KUfzDcH9gGkXC20iV1Ld-AujR8O_lHvz_6HKEPA6mjjpwIBDY8RXzTZ015u2SGhpnO",
+        "notification": {
+            "title": "AvoConsulte",
+            "body": "You Got new appointement",
+        },
+        "sound" : true
+}
+
+### Update FCM Token 
+POST {{$dotenv CLIENT_SERVER_URL}}/user/update-token HTTP/1.1
+Authorization: bearer 
+content-type: application/json 
+
+{
+    "id": "62d3c4938bb9774b54e7ea0d",
+    "token": "ccCsubiZTqOTDucZO94lIL:APA91bHMLSwkwUtICdP52sqY560zCyx2qkTEWuwuwMvdmrJa6dkK6MUl4tPJay6Da08D7zyDN8jxz67664OOJq-5rSW0wpgE3kx4H8cIo0VgXeZFwnKw4GvqAOaKF_0cKaJA9i2eKRoz"
+}
+ 
+### Update FCM Token 
+POST {{$dotenv CLIENT_SERVER_URL}}/user/update-token HTTP/1.1
+Authorization: bearer 
+content-type: application/json 
+
+{
+    "id": "638b423f6506de11aa7375f6",
+    "token": "cL5cTUuPQHm1GDvXKljNGF:APA91ETigxdvaUnsq8-Gqd_SIIqsHenIVRAlgFlTtIysa8J-9da17KN6GbhIm8Rk2yNEJo5VTRI2wrtez9XaZ08Dmwa_SXQoG7cK-d1RO6YD6J97bYQ84Z6E55sP3zsaz1ns-42Y158"
+}
