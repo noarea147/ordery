@@ -5,6 +5,7 @@ const menuSchema = new Schema(
   {
     MenuName: String,
     description: String,
+    categorie: String,
     products: [],
     isActivated: {
       type: Boolean,

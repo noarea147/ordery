@@ -5,7 +5,7 @@ const jwt = require("../../helpers/jwt");
 const router = express.Router();
 
 router.post("/create",jwt.authenticateAccessToken, MenuController.AddMenu);
-router.post("/AddProduct",jwt.authenticateAccessToken, MenuController.AddProduct);
+router.post("/AddProduct",jwt.authenticateAccessToken, MenuController.AddProducts);
 // router.post("/login", UserController.Login);
 // router.get("/refresh", UserController.Refresh);
 // router.post("/update", jwt.authenticateToken, UserController.Update);
