@@ -11,12 +11,11 @@ Authorization: bearer {{token}}
 content-type: application/json 
 
 {
-    "businessId": "my 1 menu",
-    "tableNumber": "my 1 menu description",
+    "businessId": "64c7bd2c1dcb0e65d2d66b05",
+    "tableNumber": 14,
     "products": [{
         "price": 100,
         "size": "small",
         "category": "Drinks"
-    }],
-    "menuId": "64c7bfd29b39e0928005ccfe"
+    }]
 }
