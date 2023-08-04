@@ -1,10 +1,11 @@
 const MenuModel = require("./menu.model");
+const ProductModel = require("./product.model");
 const BusinessModel = require("../business/business.model");
 const utils = require("../../helpers/utils");
 
 exports.AddMenu = async (req, res) => {
   try {
-    const { MenuName, description, businessId } = req.body;
+    const { MenuName, description, category, businessId } = req.body;
     const business = await BusinessModel.findOne({ _id: businessId });
     if (!business) {
       return res.json(utils.handleResponse("Business not found", 404));
@@ -13,6 +14,7 @@ exports.AddMenu = async (req, res) => {
     const menu = await new MenuModel({
       MenuName,
       description,
+      category,
     });
     await menu.save();
 
@@ -34,7 +36,9 @@ exports.AddProducts = async (req, res) => {
   if (!menu) {
     return res.json(utils.handleResponse("Menu not found", 404));
   }
-  var productList = [];
+
+  const newProducts = [];
+
   products.forEach((product) => {
     const vars = [];
     product.prices?.forEach((price) => {
@@ -44,14 +48,18 @@ exports.AddProducts = async (req, res) => {
       });
     });
     const productNew = {
-      Name: product.ProductName,
+      name: product.ProductName,
       description: product.description,
       prices: vars,
       images: product.images,
     };
-    productList.push(productNew);
+
+    const newProduct = new ProductModel(productNew);
+    newProduct.save();
+    newProducts.push(newProduct._id);
   });
-  menu.products = productList;
+  menu.products = newProducts;
+
   await menu.save();
   return res.json(
     utils.handleResponse("Product added successfully", 201, menu)
@@ -66,43 +74,25 @@ exports.GetMyMenus = async (req, res) => {
       return res.json(utils.handleResponse("Business not found", 404));
     }
     const menus = await MenuModel.find({ _id: business.menus });
-    const activatedMenus = menus.filter((menu) => menu.isActivated);
-    if (activatedMenus.length === 0) {
+    // const activatedMenus = menus.filter((menu) => menu.isActivated);
+    if (menus.length === 0) {
       return res.json(utils.handleResponse("No menus found", 404));
     }
-    return res.json(utils.handleResponse("Menus found", 200, activatedMenus));
+    return res.json(utils.handleResponse("Menus found", 200, menus));
   } catch (error) {
     return res.json(utils.handleResponse(error.message, 500));
   }
 };
-const products = [
-  {
-    ProductName: "expresso",
-    description: "coffee description",
-    prices: [
-      {
-        price: 5,
-        size: "standard",
-        category: "coffee",
-      },
-    ],
-    ProductName: "cappuccino",
-    description: "description",
-    prices: [
-      {
-        price: 7,
-        size: "standard",
-        category: "coffee",
-      },
-    ],
-    ProductName: "maricana",
-    description: "my 1 menu description",
-    prices: [
-      {
-        price: 9,
-        size: "standard",
-        category: "coffee",
-      },
-    ],
-  },
-];
+
+exports.GetMenu = async (req, res) => {
+  try {
+    const { menuId } = req.body;
+    const menu = await MenuModel.findOne({ _id: menuId }).populate("products");
+    if (!menu) {
+      return res.json(utils.handleResponse("Menu not found", 404));
+    }
+    return res.json(utils.handleResponse("Menu found", 200, menu));
+  } catch (error) {
+    return res.json(utils.handleResponse(error.message, 500));
+  }
+};

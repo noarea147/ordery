@@ -76,3 +76,23 @@ exports.UpdateBusiness = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+exports.GetMyBusiness = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await UserModel.findOne({ _id: userId }).populate(
+      "BusinessID"
+    );
+    if (!user) {
+      return res.json(utils.handleResponse("User not found", 404));
+    }
+    if (user.BusinessID.length === 0) {
+      return res.json(utils.handleResponse("No business found", 404));
+    }
+    return res.json(
+      utils.handleResponse("Business found", 200, user.BusinessID)
+    );
+  } catch (err) {
+    return res.json(utils.handleResponse(err.message, 500));
+  }
+};

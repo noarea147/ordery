@@ -1,4 +1,6 @@
-@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzcwMDM2MzNiZTNhMGI4M2Q1NTQ4ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkxMDIyMjI5LCJleHAiOjE2OTEwNDM4Mjl9.zSJfVg_jX9CiTvcinhEeoRtecfUDEBZN4GCILLhqjgo
+
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Y2FlOGJhZGI2OWZkNzNmZDdiZGMyNSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkxMDk2NzU3LCJleHAiOjE2OTExMTgzNTd9.0ZFiJjOkTDsnJI0kKx0b5njln8cH8vC2l9lvlaJb3CM
+
 
 
 
@@ -46,8 +48,12 @@ content-type: application/json
       ]
     }
   ],
-  "menuId": "64c7bfd29b39e0928005ccfe"
-}
+
+  "menuId": "64cae9bd9647ab96277288d4"
+
+
+
+
 
 
 
@@ -59,5 +65,24 @@ content-type: application/json
 {
     "MenuName": "my 1 menu",
     "description": "my 1 menu description",
-    "businessId": "64c7bccf769c75f273b75999"
+    "businessId": "64cae9a59647ab96277288d0"
 }
+
+### get menu
+POST {{$dotenv CLIENT_SERVER_URL}}/menu/getMyMenus HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json
+
+{
+    "businessId": "64cae9a59647ab96277288d0"
+}
+
+### get my business
+POST {{$dotenv CLIENT_SERVER_URL}}/business/getMyBusiness HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json
+
+{
+    "userId": "64cae9a59647ab96277288d0"
+}
+
