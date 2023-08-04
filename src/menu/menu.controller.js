@@ -36,7 +36,9 @@ exports.AddProducts = async (req, res) => {
   if (!menu) {
     return res.json(utils.handleResponse("Menu not found", 404));
   }
+
   const newProducts = [];
+
   products.forEach((product) => {
     const vars = [];
     product.prices?.forEach((price) => {
@@ -51,11 +53,13 @@ exports.AddProducts = async (req, res) => {
       prices: vars,
       images: product.images,
     };
+
     const newProduct = new ProductModel(productNew);
     newProduct.save();
     newProducts.push(newProduct._id);
   });
   menu.products = newProducts;
+
   await menu.save();
   return res.json(
     utils.handleResponse("Product added successfully", 201, menu)
