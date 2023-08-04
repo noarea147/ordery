@@ -1,4 +1,4 @@
-@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzcwMDM2MzNiZTNhMGI4M2Q1NTQ4ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkwODEyMDE2LCJleHAiOjE2OTA4MzM2MTZ9.P-GV5Dth3Kx8rxBnqCG4V-FnNHoVQ3J2BjOeVmvE8xg
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzcwMDM2MzNiZTNhMGI4M2Q1NTQ4ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkxMDIyMjI5LCJleHAiOjE2OTEwNDM4Mjl9.zSJfVg_jX9CiTvcinhEeoRtecfUDEBZN4GCILLhqjgo
 
 
 
@@ -11,15 +11,44 @@ Authorization: bearer {{token}}
 content-type: application/json 
 
 {
-    "ProductName": "my 1 menu",
-    "description": "my 1 menu description",
-    "prices": [{
-        "price": 100,
-        "size": "small",
-        "category": "Drinks"
-    }],
-    "menuId": "64c7bfd29b39e0928005ccfe"
+  "products": [
+    {
+      "ProductName": "expresso",
+      "description": "coffee description",
+      "prices": [
+        {
+          "price": 5,
+          "size": "standard",
+          "category": "coffee"
+        }
+      ]
+    },
+    {
+      "ProductName": "cappuccino",
+      "description": "description",
+      "prices": [
+        {
+          "price": 7,
+          "size": "standard",
+          "category": "coffee"
+        }
+      ]
+    },
+    {
+      "ProductName": "maricana",
+      "description": "my 1 menu description",
+      "prices": [
+        {
+          "price": 9,
+          "size": "standard",
+          "category": "coffee"
+        }
+      ]
+    }
+  ],
+  "menuId": "64c7bfd29b39e0928005ccfe"
 }
+
 
 
 ### create menu
