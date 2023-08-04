@@ -1,6 +1,6 @@
 @superAdminAuth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTE0MjNkZDgxMDVmOTFkNDNiNTU3OCIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY0OTQ5MjU0MSwiZXhwIjoxNjQ5NTE0MTQxfQ.889YwhfbvTJ34apnqk9fG3cS25bFUte5_x0NrfjD7q4
 
-@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzcwMDM2MzNiZTNhMGI4M2Q1NTQ4ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkwODExMzAzLCJleHAiOjE2OTA4MzI5MDN9.P9tHqqeryZtViMckO2qjOWPa2x1HMV8KmDQvl_HjiAU
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Y2FlOGJhZGI2OWZkNzNmZDdiZGMyNSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkxMDk2NzU3LCJleHAiOjE2OTExMTgzNTd9.0ZFiJjOkTDsnJI0kKx0b5njln8cH8vC2l9lvlaJb3CM
 
 @token2 =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTk5OTNjYzc1MmQzY2QxMjViOTQyYSIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY1MDAzOTEwMCwiZXhwIjoxNjUwMDYwNzAwfQ.n45mcBfTXqoXgUpbso7s6gnBDk3EjxgjqwKsxByJoCI
 
@@ -22,4 +22,13 @@ content-type: application/json
     "email": "Businesdsqqaqqaqwqeeaaaqqss Email",
     "phone": "Business Phone",
     "userId": "64c7003633be3a0b83d5548d"
+}
+
+### Get Business
+POST {{$dotenv CLIENT_SERVER_URL}}/business/getMyBusiness HTTP/1.1
+Authorization: bearer {{token}}
+content-type: application/json
+
+{
+    "userId": "64cae8badb69fd73fd7bdc25"
 }

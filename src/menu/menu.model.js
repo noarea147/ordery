@@ -6,7 +6,7 @@ const menuSchema = new Schema(
     MenuName: String,
     description: String,
     categorie: String,
-    products: [],
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     isActivated: {
       type: Boolean,
       default: false,
