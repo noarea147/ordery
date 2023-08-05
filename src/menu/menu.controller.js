@@ -65,16 +65,63 @@ exports.AddProducts = async (req, res) => {
     utils.handleResponse("Product added successfully", 201, menu)
   );
 };
+exports.EditProducts = async (req, res) => {
+  const { products, menuId } = req.body;
+  const menu = await MenuModel.findOne({ _id: menuId });
+
+  if (!menu) {
+    return res.json(utils.handleResponse("Menu not found", 404));
+  }
+
+  const updatedProductIds = [];
+
+  for (const product of products) {
+    const productToUpdate = await ProductModel.findById(product.productId);
+
+    if (!productToUpdate) {
+      return res.json(
+        utils.handleResponse(
+          `Product with ID ${product.productId} not found`,
+          404
+        )
+      );
+    }
+
+    const vars = [];
+    product.prices?.forEach((price) => {
+      vars.push({
+        size: price.size,
+        price: price.price,
+      });
+    });
+
+    productToUpdate.name = product.ProductName;
+    productToUpdate.description = product.description;
+    productToUpdate.prices = vars;
+    productToUpdate.images = product.images;
+
+    await productToUpdate.save();
+    updatedProductIds.push(productToUpdate._id);
+  }
+
+  menu.products = updatedProductIds;
+  await menu.save();
+
+  return res.json(
+    utils.handleResponse("Products updated successfully", 200, menu)
+  );
+};
 
 exports.GetMyMenus = async (req, res) => {
   try {
     const { businessId } = req.body;
-    const business = await BusinessModel.findOne({ _id: businessId });
+    const business = await BusinessModel.findOne({ _id: businessId }).populate(
+      "menus"
+    );
     if (!business) {
       return res.json(utils.handleResponse("Business not found", 404));
     }
-    const menus = await MenuModel.find({ _id: business.menus });
-    // const activatedMenus = menus.filter((menu) => menu.isActivated);
+    const menus = await MenuModel.find({ _id: { $in: business.menus } });
     if (menus.length === 0) {
       return res.json(utils.handleResponse("No menus found", 404));
     }
@@ -86,12 +133,20 @@ exports.GetMyMenus = async (req, res) => {
 
 exports.GetMenu = async (req, res) => {
   try {
-    const { menuId } = req.body;
-    const menu = await MenuModel.findOne({ _id: menuId }).populate("products");
-    if (!menu) {
-      return res.json(utils.handleResponse("Menu not found", 404));
+    const { businessId } = req.body;
+    const business = await BusinessModel.findOne({ _id: businessId }).populate(
+      "menus"
+    );
+    if (!business) {
+      return res.json(utils.handleResponse("Business not found", 404));
     }
-    return res.json(utils.handleResponse("Menu found", 200, menu));
+    const menus = await MenuModel.find({
+      _id: { $in: business.menus },
+    }).populate("products");
+    if (menus.length === 0) {
+      return res.json(utils.handleResponse("No menus found", 404));
+    }
+    return res.json(utils.handleResponse("Menus found", 200, menus));
   } catch (error) {
     return res.json(utils.handleResponse(error.message, 500));
   }

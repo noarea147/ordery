@@ -52,7 +52,6 @@ exports.Login = async (req, res) => {
     if (!user) {
       return res.json(handleResponse("User not found", 404, null));
     }
-    console.log(user);
     if (await bcrypt.compare(req.body.password, user.password)) {
       const tokens = getTokens(user);
       const data = {
