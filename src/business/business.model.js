@@ -30,12 +30,12 @@ const businessSchema = new Schema(
         ref: "Order",
       },
     ],
+    profilePicture: String,
+    coverPicture: String,
     username: {
       type: String,
       unique: true,
     },
-    profilePicture: String,
-    coverPicture: String,
     isVerified: {
       type: Boolean,
       default: false,

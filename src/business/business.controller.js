@@ -12,6 +12,7 @@ exports.AddBusiness = async (req, res) => {
       email,
       phone,
       userId,
+      username,
     } = req.body;
 
     const user = await UserModel.findOne({ _id: userId }); // Add "await" here
@@ -26,6 +27,7 @@ exports.AddBusiness = async (req, res) => {
       address,
       email,
       phone,
+      username,
     });
     await business.save();
 
@@ -92,6 +94,26 @@ exports.GetMyBusiness = async (req, res) => {
     return res.json(
       utils.handleResponse("Business found", 200, user.BusinessID)
     );
+  } catch (err) {
+    return res.json(utils.handleResponse(err.message, 500));
+  }
+};
+
+exports.GetBusinessByUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const business = await BusinessModel.findOne({ username }).populate({
+      path: "menus",
+      populate: {
+        path: "products",
+        model: "Product",
+      },
+    });
+    //i want to get the menus here and populate products with it
+    if (!business) {
+      return res.json(utils.handleResponse("Business not found", 404));
+    }
+    return res.json(utils.handleResponse("Business found", 200, business));
   } catch (err) {
     return res.json(utils.handleResponse(err.message, 500));
   }
