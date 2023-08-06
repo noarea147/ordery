@@ -26,7 +26,7 @@ const header = `
         }
     </style>
 </head>
-`
+`;
 const footer = `
     <table border="0" style="margin:auto;padding:20px;background-color: #222222;width:100%; max-width:600px;">
         <tbody>
@@ -75,10 +75,10 @@ const footer = `
 </body>
 
 </html>
-`
-    // Appointment updates
+`;
+// Appointment updates
 const confirmUserAppointmentPending = (userName, lawyerName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -99,11 +99,11 @@ const confirmUserAppointmentPending = (userName, lawyerName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const confirmLawyerAppointmentPending = (lawyerName, link) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -124,11 +124,11 @@ const confirmLawyerAppointmentPending = (lawyerName, link) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const confirmUserAppointmentConfirmed = (userName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -149,11 +149,11 @@ const confirmUserAppointmentConfirmed = (userName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const confirmLawyerAppointmentConfirmed = (lawyerName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -171,11 +171,11 @@ const confirmLawyerAppointmentConfirmed = (lawyerName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const confirmUserAppointmentCancelled = (userName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -197,11 +197,11 @@ const confirmUserAppointmentCancelled = (userName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const confirmLawyerAppointmentCancelled = (lawyerName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -219,12 +219,12 @@ const confirmLawyerAppointmentCancelled = (lawyerName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 
 const contactUser = (userName, message) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -244,11 +244,11 @@ const contactUser = (userName, message) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const contactAdmin = (userName, message) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -267,11 +267,11 @@ const contactAdmin = (userName, message) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const lawyerAccountRequestRecievedUser = (userName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -292,11 +292,11 @@ const lawyerAccountRequestRecievedUser = (userName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 const lawyerAccountRequestRecievedAdmin = (userName) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -318,12 +318,12 @@ const lawyerAccountRequestRecievedAdmin = (userName) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 
 exports.getForgotPasswordTemplate = (userName, passwordResetCode) => {
-    const template = `
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
@@ -344,82 +344,88 @@ exports.getForgotPasswordTemplate = (userName, passwordResetCode) => {
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
+        `;
+  return template;
+};
 
 // confirm email template
-exports.getConfirmEmailTemplate = (userName, link) => {
-    const template = `
+exports.getConfirmEmailTemplate = (userName, code) => {
+  const template = `
         ${header}
         <body>
             <table border="0" style="margin:auto;padding:20px;width:100%; max-width:600px">
 
                 <tr>
                     <td>
-                        <h1 style="text-align: center;"><span style="color: #ffcc00;">AVO</span>Consulte</h1>
+                        <h1 style="text-align: center;"><span style="color: #ffcc00;">Ordery</h1>
                         <br>
                         <br>
                         <p><strong>Bonjour ${userName},</strong></p>
 
 
-                        <p>merci de vous inscrire à avoconsulte, vous êtes à un pas de votre compte personnel avoconsulte. Veuillez cliquer sur l'email suivant pour vérifier votre compte:</p>
+                        <p>merci de vous inscrire à Ordery, vous êtes à un pas de votre compte personnel Ordery. Veuillez cliquer sur l'email suivant pour vérifier votre compte:</p>
                         <br>
                         <br>
-                        <center><a style="text-decoration:none; border: 0; padding: 10px 15px 10px 15px; background-color:#222222;border-radius:50px;color:#fff;" href="${link}">confirmer votre compte</a></center>
+                        <center><span><b>${code},</b></span></center>
                         <br>
                         <p>Meilleures salutations </p>
-                        <p>Avoconsulte Team</p>
+                        <p>Ordery Team</p>
                         <br>
                     </td>
                 </tr>
             </table>
             ${footer}
-        `
-    return template
-}
-exports.getAppointmentEmailTemplate = (to, status, userName = 'client', lawyerName = 'avocat', link = 'https://avoconsulte.com') => {
-    if (to === 'lawyer') {
-        if (status === 'pending') {
-            return confirmLawyerAppointmentPending(lawyerName, link)
-        }
-        if (status === 'confirmed') {
-            return confirmLawyerAppointmentConfirmed(lawyerName)
-        }
-        if (status === 'cancelled') {
-            return confirmLawyerAppointmentCancelled(lawyerName)
-        }
+        `;
+  return template;
+};
+exports.getAppointmentEmailTemplate = (
+  to,
+  status,
+  userName = "client",
+  lawyerName = "avocat",
+  link = "https://avoconsulte.com"
+) => {
+  if (to === "lawyer") {
+    if (status === "pending") {
+      return confirmLawyerAppointmentPending(lawyerName, link);
     }
-    if (to === 'user') {
-        if (status === 'pending') {
-            return confirmUserAppointmentPending(userName, lawyerName)
-        }
-        if (status === 'confirmed') {
-            return confirmUserAppointmentConfirmed(userName)
-        }
-        if (status === 'cancelled') {
-            return confirmUserAppointmentCancelled(userName)
-        }
+    if (status === "confirmed") {
+      return confirmLawyerAppointmentConfirmed(lawyerName);
     }
-    return ''
-}
+    if (status === "cancelled") {
+      return confirmLawyerAppointmentCancelled(lawyerName);
+    }
+  }
+  if (to === "user") {
+    if (status === "pending") {
+      return confirmUserAppointmentPending(userName, lawyerName);
+    }
+    if (status === "confirmed") {
+      return confirmUserAppointmentConfirmed(userName);
+    }
+    if (status === "cancelled") {
+      return confirmUserAppointmentCancelled(userName);
+    }
+  }
+  return "";
+};
 
 exports.getBusinessAccountRequestRecievedTemplate = (to, userName) => {
-    if (to === 'lawyer-account-request-user') {
-        return lawyerAccountRequestRecievedUser(userName)
-    }
-    if (to === 'lawyer-account-request-admin') {
-        return lawyerAccountRequestRecievedAdmin(userName)
-    }
-    return ''
-}
+  if (to === "lawyer-account-request-user") {
+    return lawyerAccountRequestRecievedUser(userName);
+  }
+  if (to === "lawyer-account-request-admin") {
+    return lawyerAccountRequestRecievedAdmin(userName);
+  }
+  return "";
+};
 
 exports.getContactUserEmailTemplate = (to, userName, message) => {
-    if (to === 'contact-user') {
-        return contactUser(userName, message)
-    }
-    if (to === 'contact-admin') {
-        return contactAdmin(userName, message)
-    }
-    return ''
-}
+  if (to === "contact-user") {
+    return contactUser(userName, message);
+  }
+  if (to === "contact-admin") {
+    return contactAdmin(userName, message);
+  }
+  return "";
+};

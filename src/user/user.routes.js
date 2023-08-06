@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/register", UserController.Register);
 router.post("/login", UserController.Login);
-router.get("/verify", UserController.Verify);
+router.post("/verify", UserController.Verify);
 
 module.exports = router;
