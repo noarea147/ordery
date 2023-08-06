@@ -27,6 +27,15 @@ function generateRandomString(length) {
   return result;
 }
 
+//generateRandom 5 digit number
+function generateRandomNumber(length) {
+  const chars = "0123456789";
+  let result = "";
+  for (let i = length; i > 0; --i)
+    result += chars[Math.floor(Math.random() * chars.length)];
+  return result;
+}
+
 function isBusinessOwner(arr, businessId) {
   return arr.includes(businessId);
 }
@@ -36,4 +45,5 @@ module.exports = {
   handleResponse,
   generateRandomString,
   isBusinessOwner,
+  generateRandomNumber,
 };

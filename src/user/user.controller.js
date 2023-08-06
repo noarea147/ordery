@@ -3,11 +3,7 @@ const UserModel = require("./user.model");
 const LOG = require("../../helpers/logger");
 const bcrypt = require("bcrypt");
 const { sendClientEmail } = require("../../helpers/nodemailer");
-const {
-  getTokens,
-  handleResponse,
-  generateRandomString,
-} = require("../../helpers/utils");
+const utils = require("../../helpers/utils");
 const { getConfirmEmailTemplate } = require("../../helpers/emailTemplates");
 
 exports.Register = async (req, res) => {
@@ -21,11 +17,11 @@ exports.Register = async (req, res) => {
     const newUser = ({ email, phone, password, firstName, lastName } =
       req.body);
     const user = new UserModel(newUser);
-    user.verificationKey = generateRandomString(20);
+    user.verificationKey = utils.generateRandomNumber(20);
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
     await user.save();
-    const tokens = getTokens(newUser);
+    const tokens = utils.getTokens(newUser);
     const data = {
       user: user,
       tokens: tokens,
@@ -40,30 +36,30 @@ exports.Register = async (req, res) => {
       ),
     };
     await sendClientEmail(emailSend);
-    return res.json(handleResponse("User created successfully", 200, data));
+    return res.json(utils.handleResponse("User created successfully", 200, data));
   } catch (err) {
     LOG.error(err.message);
-    res.status(500).send({ message: err.message, status: "fail" });
+    res.json(utils.handleResponse("something went wrong", 500));
   }
 };
 exports.Login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
-      return res.json(handleResponse("User not found", 404, null));
+      return res.json(utils.handleResponse("User not found", 404, null));
     }
     if (await bcrypt.compare(req.body.password, user.password)) {
-      const tokens = getTokens(user);
+      const tokens = utils.getTokens(user);
       const data = {
         user: user,
         tokens: tokens,
       };
-      return res.json(handleResponse("User logged in successfully", 200, data));
+      return res.json(utils.handleResponse("User logged in successfully", 200, data));
     }
-    return res.json(handleResponse("something went wrong", 401, null));
+    return res.json(utils.handleResponse("something went wrong", 401, null));
   } catch (err) {
     LOG.error(err.message);
-    return res.json(handleResponse("wrong credentials", 401, null));
+    return res.json(utils.handleResponse("wrong credentials", 401, null));
   }
 };
 exports.Refresh = async (req, res) => {
@@ -98,9 +94,7 @@ exports.ForgotPassword = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(400).json({
-        message: "User not found",
-      });
+      return res.json(utils.handleResponse("User not found", 404));
     }
     // generate passwordResetCode 8 digit random number
     const passwordResetCode = Math.floor(Math.random() * 100000000000);
