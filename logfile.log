@@ -2,3 +2,6 @@
 [31m2023-07-30T21:49:28.270Z - [ERROR]: bcrypt is not defined[39m
 [31m2023-07-31T00:25:18.056Z - [ERROR]: data and hash arguments required[39m
 [31m2023-07-31T00:27:05.865Z - [ERROR]: data and hash arguments required[39m
+[31m2023-08-06T16:02:15.707Z - [ERROR]: data and salt arguments required[39m
+[31m2023-08-06T16:03:40.138Z - [ERROR]: data and salt arguments required[39m
+[31m2023-08-06T16:06:16.394Z - [ERROR]: No recipients defined[39m

@@ -18,7 +18,7 @@ exports.Register = async (req, res) => {
         message: "User already exists",
       });
     }
-    const newUser = ({ email, phone, password, firstName, lastName, role } =
+    const newUser = ({ email, phone, password, firstName, lastName } =
       req.body);
     const user = new UserModel(newUser);
     user.verificationKey = generateRandomString(20);
@@ -221,16 +221,15 @@ exports.Update = async (req, res) => {
 exports.Verify = async (req, res) => {
   try {
     // the user id is the first part of the key
-    const { userId } = req.body.data.split("-")[0];
+    const { email ,VerificationKey  } = req.body;
     // the user verification key is the second part of the key
-    const userVerificationKey = req.body.data.split("-")[1];
-    const user = await UserModel.findOne({ _id: userId });
+    const user = await UserModel.findOne({ email: email });
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-    if (user.verificationKey !== userVerificationKey) {
+    if (user.verificationKey !== VerificationKey) {
       return res.status(400).json({
         message: "Invalid verification key",
       });

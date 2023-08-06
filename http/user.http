@@ -31,6 +31,16 @@ content-type: application/json
     "email":"lenit58199@qupas.com",
     "password":"123456789"
 }
+
+
+### Verify Email
+POST {{$dotenv CLIENT_SERVER_URL}}/user/verify HTTP/1.1
+content-type: application/json 
+
+{
+    "email":"alaedinnebenmbarek@gmail.com",
+    "VerificationKey":"mGo16YeFHOdQ41a7Fa3s"
+}
 ### admin login
 POST {{$dotenv CLIENT_SERVER_URL}}/user/admin-login HTTP/1.1
 content-type: application/json 
