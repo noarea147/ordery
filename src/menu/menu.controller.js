@@ -1,18 +1,20 @@
+const mongoose = require("mongoose");
 const MenuModel = require("./menu.model");
 const ProductModel = require("./product.model");
 const BusinessModel = require("../business/business.model");
+const OrderModel = require("../order/order.model");
 const utils = require("../../helpers/utils");
 
 exports.AddMenu = async (req, res) => {
   try {
-    const { MenuName, description, category, businessId } = req.body;
+    const { menuName, description, category, businessId } = req.body;
     const business = await BusinessModel.findOne({ _id: businessId });
     if (!business) {
       return res.json(utils.handleResponse("Business not found", 404));
     }
 
     const menu = await new MenuModel({
-      MenuName,
+      menuName,
       description,
       category,
     });
@@ -115,17 +117,23 @@ exports.EditProducts = async (req, res) => {
 exports.GetMyMenus = async (req, res) => {
   try {
     const { businessId } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(businessId)) {
+      return res.json(utils.handleResponse("Invalid Business ID", 404));
+    }
     const business = await BusinessModel.findOne({ _id: businessId }).populate(
-      "menus"
+      "menus",
+      "orders"
     );
+
     if (!business) {
       return res.json(utils.handleResponse("Business not found", 404));
     }
     const menus = await MenuModel.find({ _id: { $in: business.menus } });
-    if (menus.length === 0) {
-      return res.json(utils.handleResponse("No menus found", 404));
-    }
-    return res.json(utils.handleResponse("Menus found", 200, menus));
+    const orders = await OrderModel.find({ _id: { $in: business.orders } });
+    business.orders = orders;
+    business.menus = menus;
+
+    return res.json(utils.handleResponse("Business Data found", 200, business));
   } catch (error) {
     return res.json(utils.handleResponse(error.message, 500));
   }
@@ -147,6 +155,19 @@ exports.GetMenu = async (req, res) => {
       return res.json(utils.handleResponse("No menus found", 404));
     }
     return res.json(utils.handleResponse("Menus found", 200, menus));
+  } catch (error) {
+    return res.json(utils.handleResponse(error.message, 500));
+  }
+};
+
+exports.GetMenuById = async (req, res) => {
+  try {
+    const { menuId } = req.body;
+    const menu = await MenuModel.findOne({ _id: menuId }).populate("products");
+    if (!menu) {
+      return res.json(utils.handleResponse("Menu not found", 404));
+    }
+    return res.json(utils.handleResponse("Menu found", 200, menu));
   } catch (error) {
     return res.json(utils.handleResponse(error.message, 500));
   }

@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const menuSchema = new Schema(
   {
-    MenuName: String,
+    menuName: String,
     description: String,
-    categorie: String,
+    category: String,
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     isActivated: {
       type: Boolean,

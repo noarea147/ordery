@@ -5,7 +5,7 @@ const utils = require("../../helpers/utils");
 exports.AddBusiness = async (req, res) => {
   try {
     const {
-      BusinessName,
+      businessName,
       description,
       location,
       address,
@@ -21,7 +21,7 @@ exports.AddBusiness = async (req, res) => {
     }
 
     const business = await new BusinessModel({
-      BusinessName,
+      businessName,
       description,
       location,
       address,
@@ -48,7 +48,7 @@ exports.UpdateBusiness = async (req, res) => {
     const user = await UserModel.findById(AuthUser._id).populate("BusinessID");
     const {
       businessId,
-      BusinessName,
+      businessName,
       description,
       location,
       address,
@@ -64,7 +64,7 @@ exports.UpdateBusiness = async (req, res) => {
         utils.handleResponse("You are not the owner of this business", 401)
       );
     }
-    business.BusinessName = BusinessName;
+    business.BusinessName = businessName;
     business.description = description;
     business.location = location;
     business.address = address;
