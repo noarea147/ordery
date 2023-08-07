@@ -5,7 +5,7 @@ const jwt = require("../../helpers/jwt");
 const router = express.Router();
 
 router.post("/create",jwt.authenticateAccessToken, MenuController.AddMenu);
-router.post("/AddProduct",jwt.authenticateAccessToken, MenuController.AddProducts);
+router.post("/addProduct",jwt.authenticateAccessToken, MenuController.AddProducts);
 router.post("/getMyMenus",jwt.authenticateAccessToken, MenuController.GetMyMenus);
 router.post("/getMenu", MenuController.GetMenu);
 router.post("/getMenuProducts", MenuController.GetMenuById);

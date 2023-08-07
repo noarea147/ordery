@@ -31,87 +31,136 @@ exports.AddMenu = async (req, res) => {
     return res.json(utils.handleResponse(error.message, 500));
   }
 };
+exports.EditMenu = async (req, res) => {
+  try {
+    const { menuId, menuName, description, category } = req.body;
+    const menu = await MenuModel.findOne({ _id: menuId });
+    if (!menu) {
+      return res.json(utils.handleResponse("Menu not found", 404));
+    }
+    menu.menuName = menuName;
+    menu.description = description;
+    menu.category = category;
+    await menu.save();
+    return res.json(utils.handleResponse("Menu updated successfully", 200));
+  } catch (error) {
+    return res.json(utils.handleResponse(error.message, 500));
+  }
+};
+exports.DeleteMenu = async (req, res) => {
+  try {
+    const { menuId, businessId } = req.body;
+    const business = await BusinessModel.findOne({ _id: businessId });
+    if (!business) {
+      return res.json(utils.handleResponse("Business not found", 404));
+    }
+    const menu = await MenuModel.findOne({ _id: menuId });
+    if (!menu) {
+      return res.json(utils.handleResponse("Menu not found", 404));
+    }
+    await MenuModel.deleteOne({ _id: menuId });
+    return res.json(utils.handleResponse("Menu deleted successfully", 200));
+  } catch (error) {
+    return res.json(utils.handleResponse(error.message, 500));
+  }
+};
 
 exports.AddProducts = async (req, res) => {
-  const { products, menuId } = req.body;
-  const menu = await MenuModel.findOne({ _id: menuId });
-  if (!menu) {
-    return res.json(utils.handleResponse("Menu not found", 404));
-  }
+  try {
+    const { name, description, prices, image, menuId } = req.body;
 
-  const newProducts = [];
+    const menu = await MenuModel.findOne({ _id: menuId });
+    if (!menu) {
+      return res.status(404).json(utils.handleResponse("Menu not found", 404));
+    }
 
-  products.forEach((product) => {
-    const vars = [];
-    product.prices?.forEach((price) => {
-      vars.push({
-        size: price.size,
-        price: price.price,
-      });
-    });
     const productNew = {
-      name: product.ProductName,
-      description: product.description,
-      prices: vars,
-      images: product.images,
+      name: name,
+      description: description,
+      prices: prices,
+      images: image,
     };
-
     const newProduct = new ProductModel(productNew);
-    newProduct.save();
-    newProducts.push(newProduct._id);
-  });
-  menu.products = newProducts;
+    await newProduct.save();
+    menu.products.push(newProduct._id);
+    await menu.save();
 
-  await menu.save();
-  return res.json(
-    utils.handleResponse("Product added successfully", 201, menu)
-  );
-};
-exports.EditProducts = async (req, res) => {
-  const { products, menuId } = req.body;
-  const menu = await MenuModel.findOne({ _id: menuId });
-
-  if (!menu) {
-    return res.json(utils.handleResponse("Menu not found", 404));
+    return res
+      .status(201)
+      .json(utils.handleResponse("Product added successfully", 201, menu));
+  } catch (error) {
+    console.error("Error in AddProducts:", error);
+    return res
+      .status(500)
+      .json(utils.handleResponse("Internal Server Error", 500));
   }
+};
 
-  const updatedProductIds = [];
+exports.EditProduct = async (req, res) => {
+  try {
+    const { productId, menuId, name, prices, description } = req.body;
+    const menu = await MenuModel.findOne({ _id: menuId });
 
-  for (const product of products) {
-    const productToUpdate = await ProductModel.findById(product.productId);
+    if (!menu) {
+      return res.json(utils.handleResponse("Menu not found", 404));
+    }
 
-    if (!productToUpdate) {
+    if (!menu.products.includes(productId)) {
       return res.json(
-        utils.handleResponse(
-          `Product with ID ${product.productId} not found`,
-          404
-        )
+        utils.handleResponse("Product not found in the menu", 404)
       );
     }
 
-    const vars = [];
-    product.prices?.forEach((price) => {
-      vars.push({
-        size: price.size,
-        price: price.price,
-      });
-    });
+    const product = await ProductModel.findById(productId);
+    if (!product) {
+      return res.json(utils.handleResponse("Product not found", 404));
+    }
 
-    productToUpdate.name = product.ProductName;
-    productToUpdate.description = product.description;
-    productToUpdate.prices = vars;
-    productToUpdate.images = product.images;
+    product.name = name;
+    product.description = description;
+    product.prices = prices;
 
-    await productToUpdate.save();
-    updatedProductIds.push(productToUpdate._id);
+    await product.save();
+
+    return res.json(
+      utils.handleResponse("Product updated successfully", 200, product)
+    );
+  } catch (error) {
+    return res.json(utils.handleResponse(error.message, 500));
   }
+};
 
-  menu.products = updatedProductIds;
-  await menu.save();
+exports.DeleteProduct = async (req, res) => {
+  try {
+    const { productsId, menuId } = req.body;
+    const menu = await MenuModel.findOne({ _id: menuId });
 
-  return res.json(
-    utils.handleResponse("Products updated successfully", 200, menu)
-  );
+    if (!menu) {
+      return res.json(utils.handleResponse("Menu not found", 404));
+    }
+
+    const invalidProductIds = productsId.filter(
+      (productId) => !menu.products.includes(productId)
+    );
+    if (invalidProductIds.length > 0) {
+      return res.json(utils.handleResponse("Product not found", 404));
+    }
+
+    const productsToDelete = await ProductModel.find({
+      _id: { $in: productsId },
+    });
+    if (!productsToDelete || productsToDelete.length === 0) {
+      return res.json(utils.handleResponse("Product(s) not found", 404));
+    }
+
+    await ProductModel.deleteMany({ _id: { $in: productsId } });
+
+    return res.json(
+      utils.handleResponse("Products deleted successfully", 200, menu)
+    );
+  } catch (error) {
+    return res.json(utils.handleResponse(error.message, 500));
+  }
 };
 
 exports.GetMyMenus = async (req, res) => {
