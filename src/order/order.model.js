@@ -4,14 +4,19 @@ const { Schema } = mongoose;
 const orderSchema = new Schema(
   {
     notes: String,
-    products: [],
-    tableNumber: Number,
+    products: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    tableNumber: String,
     status: {
       enum: ["pending", "confirmed", "completed"],
       type: String,
       default: "pending",
     },
-    total: Number,
+    total: String,
   },
   {
     timestamps: true,

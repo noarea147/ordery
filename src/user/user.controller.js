@@ -70,14 +70,14 @@ exports.Verify = async (req, res) => {
     // the user id is the first part of the key
     const { email, VerificationKey } = req.body;
     // the user verification key is the second part of the key
-    
+
     const user = await UserModel.findOne({ email: email });
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-    
+
     if (!VerificationKey && email) {
       user.verificationKey = utils.generateRandomNumber(5);
       await user.save();
