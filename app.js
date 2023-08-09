@@ -12,6 +12,7 @@ app.use('/user', require('./src/user/user.routes'));
 app.use('/menu', require('./src/menu/menu.routes'));
 app.use('/business', require('./src/business/business.routes'));
 app.use('/order', require('./src/order/order.routes'));
+app.use('/category', require('./src/category/category.routes'));
 
 
 

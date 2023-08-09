@@ -9,6 +9,8 @@ router.post("/addProduct",jwt.authenticateAccessToken, MenuController.AddProduct
 router.post("/getMyMenus",jwt.authenticateAccessToken, MenuController.GetMyMenus);
 router.post("/getMenu", MenuController.GetMenu);
 router.post("/getMenuProducts", MenuController.GetMenuById);
+router.post("/delete",jwt.authenticateAccessToken, MenuController.DeleteMenu);
+router.post("/deleteProduct",jwt.authenticateAccessToken, MenuController.DeleteProduct);
 // router.post("/login", UserController.Login);
 // router.get("/refresh", UserController.Refresh);
 // router.post("/update", jwt.authenticateToken, UserController.Update);

@@ -3,6 +3,7 @@ const MenuModel = require("./menu.model");
 const ProductModel = require("./product.model");
 const BusinessModel = require("../business/business.model");
 const OrderModel = require("../order/order.model");
+const UserModel = require("../user/user.model");
 const utils = require("../../helpers/utils");
 
 exports.AddMenu = async (req, res) => {
@@ -49,16 +50,32 @@ exports.EditMenu = async (req, res) => {
 };
 exports.DeleteMenu = async (req, res) => {
   try {
+    console.log(req.user);
+    const user = await UserModel.findOne({ _id: req.user.id }).populate(
+      "BusinessID"
+    );
     const { menuId, businessId } = req.body;
+
+    const hasAuthorization = user.BusinessID.some(
+      (business) => business._id.toString() === businessId
+    );
+    if (!hasAuthorization) {
+      return res.json(
+        utils.handleResponse("You are not authorized to delete this menu", 401)
+      );
+    }
     const business = await BusinessModel.findOne({ _id: businessId });
     if (!business) {
       return res.json(utils.handleResponse("Business not found", 404));
     }
-    const menu = await MenuModel.findOne({ _id: menuId });
-    if (!menu) {
+
+    if (!business.menus.includes(menuId)) {
       return res.json(utils.handleResponse("Menu not found", 404));
     }
+    //delete menu from business
     await MenuModel.deleteOne({ _id: menuId });
+    business.menus = business.menus.filter((menu) => menu !== menuId);
+    await business.save();
     return res.json(utils.handleResponse("Menu deleted successfully", 200));
   } catch (error) {
     return res.json(utils.handleResponse(error.message, 500));
