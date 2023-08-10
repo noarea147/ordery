@@ -50,7 +50,6 @@ exports.EditMenu = async (req, res) => {
 };
 exports.DeleteMenu = async (req, res) => {
   try {
-    console.log(req.user);
     const user = await UserModel.findOne({ _id: req.user.id }).populate(
       "BusinessID"
     );
