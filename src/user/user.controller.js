@@ -9,13 +9,23 @@ const { getConfirmEmailTemplate } = require("../../helpers/emailTemplates");
 exports.Register = async (req, res) => {
   try {
     const { email, phone, password, firstName, lastName } = req.body;
-    const response = await UserModel.find({ email: email });
+
+    // Convert email to lowercase for case-insensitive search
+    const lowerCaseEmail = email.toLowerCase();
+
+    const response = await UserModel.find({ email: lowerCaseEmail });
     if (response.length > 0) {
       return res.status(400).json({
         message: "User already exists",
       });
     }
-    const user = new UserModel({ email, phone, password, firstName, lastName });
+    const user = new UserModel({
+      email: lowerCaseEmail,
+      phone,
+      password,
+      firstName,
+      lastName,
+    });
     user.verificationKey = utils.generateRandomNumber(5);
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
@@ -43,13 +53,19 @@ exports.Register = async (req, res) => {
     res.json(utils.handleResponse("something went wrong", 500));
   }
 };
+
 exports.Login = async (req, res) => {
   try {
-    const user = await UserModel.findOne({ email: req.body.email });
+    const { email, password } = req.body;
+
+    // Convert email to lowercase for case-insensitive search
+    const lowerCaseEmail = email.toLowerCase();
+
+    const user = await UserModel.findOne({ email: lowerCaseEmail });
     if (!user) {
       return res.json(utils.handleResponse("User not found", 404, null));
     }
-    if (await bcrypt.compare(req.body.password, user.password)) {
+    if (await bcrypt.compare(password, user.password)) {
       const tokens = utils.getTokens(user);
       const data = {
         user: user,
@@ -59,19 +75,23 @@ exports.Login = async (req, res) => {
         utils.handleResponse("User logged in successfully", 200, data)
       );
     }
-    return res.json(utils.handleResponse("something went wrong", 401, null));
+    return res.json(utils.handleResponse("Invalid credentials", 401, null));
   } catch (err) {
     LOG.error(err.message);
-    return res.json(utils.handleResponse("wrong credentials", 401, null));
+    return res.json(utils.handleResponse("Something went wrong", 500, null));
   }
 };
+
 exports.Verify = async (req, res) => {
   try {
     // the user id is the first part of the key
     const { email, VerificationKey } = req.body;
     // the user verification key is the second part of the key
 
-    const user = await UserModel.findOne({ email: email });
+    // Convert email to lowercase for case-insensitive search
+    const lowerCaseEmail = email.toLowerCase();
+
+    const user = await UserModel.findOne({ email: lowerCaseEmail });
     if (!user) {
       return res.status(404).json({
         message: "User not found",
@@ -101,37 +121,11 @@ exports.Verify = async (req, res) => {
     res.json(utils.handleResponse("User verified successfully", 200));
   } catch (err) {
     LOG.error(err.message);
-    res.json(utils.handleResponse("something went wrong", 500));
+    res.json(utils.handleResponse("Something went wrong", 500));
   }
 };
-exports.Refresh = async (req, res) => {
-  try {
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(" ")[1];
 
-    const headers = {
-      "Content-type": "application/json; charset=UTF-8",
-      Authorization: `Bearer ${token}`,
-    };
-    const config = {
-      headers,
-    };
-    const response = await axios.get(
-      `${process.env.AUTH_SERVER_URL}/user/refresh`,
-      config
-    );
-    res.json({
-      message: "User logged in successfully",
-      data: {
-        accessToken: response.data.accessToken,
-      },
-      status: "success",
-    });
-  } catch (err) {
-    LOG.error(err.message);
-    res.status(403).send({ message: "wrong credentials", status: "fail" });
-  }
-};
+
 exports.ForgotPassword = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
