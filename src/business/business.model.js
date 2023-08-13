@@ -9,6 +9,7 @@ const businessSchema = new Schema(
       lng: Number,
       lat: Number,
     },
+    maxDistance: Number,
     address: String,
     email: {
       type: String,

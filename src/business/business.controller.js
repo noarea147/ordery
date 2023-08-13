@@ -13,6 +13,7 @@ exports.AddBusiness = async (req, res) => {
       phone,
       userId,
       username,
+      maxDistance,
     } = req.body;
 
     const user = await UserModel.findOne({ _id: userId }); // Add "await" here
@@ -28,6 +29,7 @@ exports.AddBusiness = async (req, res) => {
       email,
       phone,
       username,
+      maxDistance,
     });
     await business.save();
 
