@@ -43,7 +43,9 @@ exports.EditMenu = async (req, res) => {
     menu.description = description;
     menu.category = category;
     await menu.save();
-    return res.json(utils.handleResponse("Menu updated successfully", 200));
+    return res.json(
+      utils.handleResponse("Menu updated successfully", 200, menu)
+    );
   } catch (error) {
     return res.json(utils.handleResponse(error.message, 500));
   }
