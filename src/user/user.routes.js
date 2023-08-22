@@ -7,5 +7,6 @@ const router = express.Router();
 router.post("/register", UserController.Register);
 router.post("/login", UserController.Login);
 router.post("/verify", UserController.Verify);
+router.post("/updateToken", UserController.updateFcmToken);
 
 module.exports = router;

@@ -21,6 +21,7 @@ exports.PlacrOrder = async (req, res) => {
     await order.save();
     business.orders.push(order._id);
     await business.save();
+    
     return res.json(
       utils.handleResponse("Order placed successfully", 201, order)
     );

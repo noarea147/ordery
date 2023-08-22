@@ -125,7 +125,6 @@ exports.Verify = async (req, res) => {
   }
 };
 
-
 exports.ForgotPassword = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
@@ -285,14 +284,14 @@ exports.ChangeEmail = async (req, res) => {
   }
 };
 exports.updateFcmToken = async (req, res) => {
-  const user = await UserModel.findOne({ _id: req.body.id });
+  const { id, token } = req.body;
+  const user = await UserModel.findOne({ _id: id });
   if (!user) {
     return res.status(404).json({
       message: "User not found",
     });
   }
-  const token = req.body.token;
-  user.fcmToken = token;
+  user.firebaseToken = token;
   user.save();
   res.status(200).json({
     message: "User FcmToken updated",
