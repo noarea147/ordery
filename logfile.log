@@ -13,3 +13,6 @@
 [31m2023-08-07T17:33:29.706Z - [ERROR]: User validation failed: email: Path `email` is required.[39m
 [31m2023-08-07T17:40:38.351Z - [ERROR]: User validation failed: email: Path `email` is required.[39m
 [31m2023-08-07T17:40:39.137Z - [ERROR]: User validation failed: email: Path `email` is required.[39m
+[31m2024-07-31T16:02:06.184Z - [ERROR]: Connection error: connect ECONNREFUSED 127.0.0.1:27017[39m
+[31m2024-07-31T16:07:18.505Z - [ERROR]: Connection error: connect ECONNREFUSED 127.0.0.1:27017[39m
+[31m2024-07-31T16:11:36.474Z - [ERROR]: Invalid login: 535 5.7.8 Error: authentication failed: authentication failure[39m

@@ -111,7 +111,6 @@ exports.GetBusinessByUsername = async (req, res) => {
         model: "Product",
       },
     });
-    //i want to get the menus here and populate products with it
     if (!business) {
       return res.json(utils.handleResponse("Business not found", 404));
     }
